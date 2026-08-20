@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego - Mini Celeste con Partículas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #000000;
+            font-family: 'Inter', sans-serif;
+        }
+        .titulo {
+            color: #ffffff;
+            font-family: 'Metal Mania', cursive;
+            font-size: 60px;
+            letter-spacing: 6px;
+            text-shadow: 0 0 20px rgba(255,255,255,0.8), 0 0 40px rgba(255,255,255,0.4);
+        }
+        .contenedor {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #333333;
+            border-radius: 4px;
+            background: linear-gradient(180deg, #0a0a0a 0%, #000000 100%);
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(255,255,255,0.15);
+        }
+        .conten-principal {
+            display: flex;
+            border: 1px solid #333333;
+            height: auto;
+            min-height: 160vh;
+            box-shadow: inset 0 0 30px rgba(255,255,255,0.05);
+        }
+        .parrafo {
+            color: #cccccc;
+            margin-left: 50px;
+            margin-right: 50px;
+            line-height: 1.6;
+        }
+        .conten-imagen {
+            display: flex;
+            border: 2px solid #333333;
+            margin: 10px;
+            box-shadow: 0 0 20px rgba(255,255,255,0.1);
+        }
+        .conten-parrafo {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #333333;
+            margin: 10px;
+            width: 100%;
+            padding: 10px;
+        }
+        .p-nombre {
+            color: #ffffff;
+            font-family: 'Metal Mania', cursive;
+            font-size: 48px;
+            text-align: center;
+            letter-spacing: 4px;
+            text-shadow: 0 0 15px rgba(255,255,255,0.6);
+            padding: 10px 0;
+        }
+        .botones_1 {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .boton_1 {
+            display: inline-block;
+            padding: 12px 28px;
+            color: #ffffff;
+            background: transparent;
+            border: 2px solid #ffffff;
+            border-radius: 4px;
+            text-decoration: none;
+            box-shadow: 0 0 8px rgba(255,255,255,0.4), inset 0 0 10px rgba(255,255,255,0.1);
+            margin: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-family: 'Metal Mania', cursive;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+        .boton_1:hover {
+            background: #ffffff;
+            color: #000;
+            box-shadow: 0 0 20px rgba(255,255,255,0.8), inset 0 0 15px rgba(255,255,255,0.3);
+        }
+        .horario {
+            color: #cccccc;
+            text-align: center;
+            border: 1px solid #333333;
+            margin-top: 20px;
+            padding: 10px;
+        }
+        .h-titulo {
+            font-family: 'Metal Mania', cursive;
+            color: #ffffff;
+            letter-spacing: 4px;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+            margin-bottom: 10px;
+        }
+        .tabla {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #333333;
+        }
+        .tabla th, .tabla td {
+            border: 1px solid #333333;
+            padding: 8px;
+            text-align: center;
+        }
+        .tabla th {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-weight: 700;
+        }
+        .tabla td {
+            background-color: #0a0a0a;
+            color: #cccccc;
+        }
+        .modo-hacker th {
+            background-color: #87CEFA !important;
+            color: #000 !important;
+        }
+        .modo-hacker td {
+            background-color: #FFD700 !important;
+            color: #000 !important;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #333333;
+            background: #0a0a0a;
+        }
+        .imagen-perfil {
+            max-width: 300px;
+            max-height: 400px;
+            width: auto;
+            height: auto;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 2px solid #333333;
+            box-shadow: 0 0 20px rgba(255,255,255,0.1);
+        }
+        .conten-imagen {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        label {
+            color: #ffffff;
+            font-family: 'Metal Mania', cursive;
+            letter-spacing: 1px;
+        }
+        input[type="text"],
+        input[type="password"] {
+            padding: 12px;
+            border: 2px solid #333333;
+            border-radius: 4px;
+            background: #000000;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+        }
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #ffffff;
+            box-shadow: 0 0 10px rgba(255,255,255,0.3);
+        }
+        button[type="submit"] {
+            padding: 12px 28px;
+            color: #ffffff;
+            background: transparent;
+            border: 2px solid #ffffff;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-family: 'Metal Mania', cursive;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+        button[type="submit"]:hover {
+            background: #ffffff;
+            color: #000;
+            box-shadow: 0 0 20px rgba(255,255,255,0.8), inset 0 0 15px rgba(255,255,255,0.3);
+        }
+        body{
+            background-color: rgb(0, 217, 255);
+        }
+        .hii{
+            color:rgb(217, 255, 0)
+        }
+        .holajuanito{
+            background-color:crimson
+        }
+        .conten-principal {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .conten-parrafo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        #juegoCanvas {
+            background-color: #0f1016;
+            border: 3px solid #ff0055;
+            box-shadow: 0 0 25px rgba(255, 0, 85, 0.3);
+            border-radius: 8px;
+            max-width: 100%;
+            height: auto;
+            margin: 15px 0;
+        }
+
+        .instrucciones {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 15px;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .key {
+            background: #ff0055;
+            color: #ffffff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .btn-fullscreen {
+            background-color: #ff0055;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: transform 0.1s ease, background-color 0.2s ease;
+        }
+
+        .btn-fullscreen:hover {
+            background-color: #d60047;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="contenedor">
+            <h1 class="titulo">juego</h1>
+        </div>
+    </header>
+    <br>
+    <div class="conten-principal">
+        <div class="conten-parrafo">
+            <h1 class="p-nombre">🍓 Mini Celeste Infinito</h1>
+            
+            <canvas id="juegoCanvas" width="800" height="450"></canvas>
+            
+            <button id="btnFullscreen" class="btn-fullscreen">⛶ Pantalla Completa</button>
+
+            <div class="instrucciones">
+                <p>
+                    <strong>Moverse:</strong> <span class="key">Flechas Izq/Der</span> | 
+                    <strong>Saltar:</strong> <span class="key">Flecha Arriba</span> | 
+                    <strong>Dash:</strong> <span class="key">Shift</span> o <span class="key">X</span>
+                </p>
+            </div>
+
+            <div class="botones_1">
+                <a href="index.html" class="boton_1">Volver al inicio</a>
+                <a href="menu.html" class="boton_1">Menú principal</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('juegoCanvas');
+        const ctx = canvas.getContext('2d');
+        const btnFullscreen = document.getElementById('btnFullscreen');
+
+        // --- CARGA DE SPRITES SVG ---
+        function crearSpriteDataURI(svgString) {
+            const img = new Image();
+            img.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(svgString);
+            return img;
+        }
+
+        const imgJugadorDash = crearSpriteDataURI(`
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 40">
+                <path d="M 6 12 C 2 4, 18 0, 26 8 C 30 16, 24 24, 18 22 C 24 28, 12 36, 4 20 Z" fill="#ff0055"/>
+                <rect x="10" y="14" width="16" height="22" rx="4" fill="#2c3e50"/>
+                <ellipse cx="20" cy="18" rx="6" ry="5" fill="#ffdfba"/>
+                <circle cx="22" cy="18" r="1.5" fill="#000000"/>
+                <path d="M 8 10 C 14 2, 26 4, 28 14 C 20 10, 12 12, 10 18 Z" fill="#cc0044"/>
+            </svg>
+        `);
+
+        const imgJugadorSinDash = crearSpriteDataURI(`
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 40">
+                <path d="M 6 12 C 2 4, 18 0, 26 8 C 30 16, 24 24, 18 22 C 24 28, 12 36, 4 20 Z" fill="#00d2d3"/>
+                <rect x="10" y="14" width="16" height="22" rx="4" fill="#2c3e50"/>
+                <ellipse cx="20" cy="18" rx="6" ry="5" fill="#ffdfba"/>
+                <circle cx="22" cy="18" r="1.5" fill="#000000"/>
+                <path d="M 8 10 C 14 2, 26 4, 28 14 C 20 10, 12 12, 10 18 Z" fill="#00a8a9"/>
+            </svg>
+        `);
+
+        const imgMeta = crearSpriteDataURI(`
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+                <path d="M 16 4 C 8 -2, 2 10, 8 22 C 12 28, 16 32, 16 32 C 16 32, 20 28, 24 22 C 30 10, 24 -2, 16 4 Z" fill="#ff2e63"/>
+                <path d="M 12 4 C 16 8, 16 8, 20 4 C 18 2, 14 2, 12 4 Z" fill="#2ecc71"/>
+                <circle cx="12" cy="12" r="1" fill="#ffffff"/>
+                <circle cx="20" cy="14" r="1" fill="#ffffff"/>
+                <circle cx="15" cy="20" r="1" fill="#ffffff"/>
+            </svg>
+        `);
+
+        btnFullscreen.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                if (canvas.requestFullscreen) canvas.requestFullscreen();
+            } else {
+                if (document.exitFullscreen) document.exitFullscreen();
+            }
+        });
+
+        // Controles y Estado
+        const teclas = { ArrowLeft: false, ArrowRight: false, ArrowUp: false };
+        let nivel = 1;
+        let muertes = 0;
+
+        // --- SISTEMA DE PARTÍCULAS ---
+        let particulas = [];
+
+        function crearParticulasDash(x, y, color, esEstela = false) {
+            const cantidad = esEstela ? 2 : 18;
+            for (let i = 0; i < cantidad; i++) {
+                particulas.push({
+                    x: x + jugador.ancho / 2,
+                    y: y + jugador.alto / 2,
+                    vx: esEstela ? (Math.random() - 0.5) * 2 : (Math.random() - 0.5) * 8,
+                    vy: esEstela ? (Math.random() - 0.5) * 2 : (Math.random() - 0.5) * 8,
+                    tamano: esEstela ? Math.random() * 3 + 2 : Math.random() * 5 + 3,
+                    vida: 1.0, // Opacidad de 1 a 0
+                    velocidadVida: esEstela ? 0.08 : Math.random() * 0.04 + 0.03,
+                    color: color
+                });
+            }
+        }
+
+        const jugador = {
+            x: 50, y: 300,
+            ancho: 24, alto: 32,
+            vx: 0, vy: 0,
+            velocidad: 4,
+            fuerzaSalto: -9.5,
+            gravedad: 0.45,
+            enSuelo: false,
+            puedoDash: true,
+            dashing: false,
+            tiempoDash: 0,
+            direccion: 1
+        };
+
+        let plataformas = [];
+        let espinas = [];
+        let meta = { x: 740, y: 50, ancho: 32, alto: 32 };
+
+        function generarNivel() {
+            plataformas = [];
+            espinas = [];
+            particulas = [];
+
+            plataformas.push({ x: 20, y: 380, w: 120, h: 20 });
+            
+            let metaY = 80 + Math.random() * 150;
+            meta.y = metaY - 35;
+            plataformas.push({ x: 660, y: metaY, w: 120, h: 20 });
+
+            let numPlataformas = 5 + Math.floor(Math.random() * 3);
+            for (let i = 0; i < numPlataformas; i++) {
+                let px = 150 + (i * (480 / numPlataformas)) + (Math.random() * 20 - 10);
+                let py = 120 + Math.random() * 240;
+                let pw = 70 + Math.random() * 50;
+                
+                plataformas.push({ x: px, y: py, w: pw, h: 18 });
+
+                if (Math.random() < 0.4 && i > 0) {
+                    espinas.push({ x: px + pw/4, y: py - 12, w: pw/2, h: 12 });
+                }
+            }
+
+            espinas.push({ x: 0, y: canvas.height - 10, w: canvas.width, h: 10 });
+
+            jugador.x = 50;
+            jugador.y = 330;
+            jugador.vx = 0;
+            jugador.vy = 0;
+            jugador.puedoDash = true;
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'].includes(e.code)) {
+                e.preventDefault();
+            }
+            if (e.code === 'ArrowLeft') teclas.ArrowLeft = true;
+            if (e.code === 'ArrowRight') teclas.ArrowRight = true;
+            if (e.code === 'ArrowUp') teclas.ArrowUp = true;
+            if (e.code === 'ShiftLeft' || e.code === 'ShiftRight' || e.code === 'KeyX') hacerDash();
+        });
+
+        window.addEventListener('keyup', (e) => {
+            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'].includes(e.code)) {
+                e.preventDefault();
+            }
+            if (e.code === 'ArrowLeft') teclas.ArrowLeft = false;
+            if (e.code === 'ArrowRight') teclas.ArrowRight = false;
+            if (e.code === 'ArrowUp') teclas.ArrowUp = false;
+        });
+
+        function hacerDash() {
+            if (jugador.puedoDash && !jugador.dashing) {
+                jugador.puedoDash = false;
+                jugador.dashing = true;
+                jugador.tiempoDash = 10;
+
+                let dirX = 0;
+                let dirY = 0;
+
+                if (teclas.ArrowLeft) dirX = -1;
+                if (teclas.ArrowRight) dirX = 1;
+                if (teclas.ArrowUp) dirY = -1;
+
+                if (dirX === 0 && dirY === 0) dirX = jugador.direccion;
+
+                let impulso = 11;
+                jugador.vx = dirX * impulso;
+                jugador.vy = dirY * impulso;
+
+                // Crear explosión de partículas de Dash (Magenta/Rosa)
+                crearParticulasDash(jugador.x, jugador.y, '#ff0055');
+            }
+        }
+
+        function actualizar() {
+            if (jugador.dashing) {
+                jugador.tiempoDash--;
+                
+                // Crear estela continua durante el impulso
+                crearParticulasDash(jugador.x, jugador.y, '#ff66a3', true);
+
+                if (jugador.tiempoDash <= 0) {
+                    jugador.dashing = false;
+                    jugador.vx *= 0.5;
+                    jugador.vy *= 0.5;
+                }
+            } else {
+                if (teclas.ArrowLeft) {
+                    jugador.vx = -jugador.velocidad;
+                    jugador.direccion = -1;
+                } else if (teclas.ArrowRight) {
+                    jugador.vx = jugador.velocidad;
+                    jugador.direccion = 1;
+                } else {
+                    jugador.vx *= 0.8;
+                }
+
+                if (teclas.ArrowUp && jugador.enSuelo) {
+                    jugador.vy = jugador.fuerzaSalto;
+                    jugador.enSuelo = false;
+                }
+
+                jugador.vy += jugador.gravedad;
+            }
+
+            // Actualizar posiciones de las partículas
+            for (let i = particulas.length - 1; i >= 0; i--) {
+                let p = particulas[i];
+                p.x += p.vx;
+                p.y += p.vy;
+                p.vida -= p.velocidadVida;
+                if (p.vida <= 0) {
+                    particulas.splice(i, 1);
+                }
+            }
+
+            jugador.x += jugador.vx;
+            plataformas.forEach(p => {
+                if (colision(jugador, p)) {
+                    if (jugador.vx > 0) jugador.x = p.x - jugador.ancho;
+                    if (jugador.vx < 0) jugador.x = p.x + p.w;
+                    jugador.vx = 0;
+                }
+            });
+
+            jugador.y += jugador.vy;
+            jugador.enSuelo = false;
+            
+            plataformas.forEach(p => {
+                if (colision(jugador, p)) {
+                    if (jugador.vy > 0) {
+                        jugador.y = p.y - jugador.alto;
+                        jugador.vy = 0;
+                        jugador.enSuelo = true;
+                        jugador.puedoDash = true;
+                    } else if (jugador.vy < 0) {
+                        jugador.y = p.y + p.h;
+                        jugador.vy = 0;
+                    }
+                }
+            });
+
+            espinas.forEach(e => {
+                if (colision(jugador, e)) {
+                    muertes++;
+                    generarNivel();
+                }
+            });
+
+            if (colision(jugador, meta)) {
+                nivel++;
+                generarNivel();
+            }
+
+            if (jugador.x < 0) jugador.x = 0;
+            if (jugador.x + jugador.ancho > canvas.width) jugador.x = canvas.width - jugador.ancho;
+        }
+
+        function colision(r1, r2) {
+            let r2w = r2.w || r2.ancho;
+            let r2h = r2.h || r2.alto;
+            return (
+                r1.x < r2.x + r2w &&
+                r1.x + r1.ancho > r2.x &&
+                r1.y < r2.y + r2h &&
+                r1.y + r1.alto > r2.y
+            );
+        }
+
+        function dibujar() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // UI
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText(`Nivel: ${nivel}`, 20, 30);
+            ctx.fillStyle = '#ff0055';
+            ctx.fillText(`🍓 Muertes: ${muertes}`, 120, 30);
+
+            // Dibujar Plataformas
+            plataformas.forEach(p => {
+                ctx.fillStyle = '#34495e';
+                ctx.fillRect(p.x, p.y, p.w, p.h);
+                ctx.fillStyle = '#5d6d7e';
+                ctx.fillRect(p.x, p.y, p.w, 4);
+            });
+
+            // Dibujar Espinas
+            ctx.fillStyle = '#e74c3c';
+            espinas.forEach(e => {
+                let numPicos = Math.max(1, Math.floor(e.w / 10));
+                let anchoPico = e.w / numPicos;
+                
+                for (let i = 0; i < numPicos; i++) {
+                    ctx.beginPath();
+                    ctx.moveTo(e.x + (i * anchoPico), e.y + e.h);
+                    ctx.lineTo(e.x + (i * anchoPico) + (anchoPico / 2), e.y);
+                    ctx.lineTo(e.x + ((i + 1) * anchoPico), e.y + e.h);
+                    ctx.fill();
+                }
+            });
+
+            // Dibujar Meta
+            ctx.drawImage(imgMeta, meta.x, meta.y, meta.ancho, meta.alto);
+
+            // Dibujar Partículas
+            particulas.forEach(p => {
+                ctx.save();
+                ctx.globalAlpha = Math.max(0, p.vida);
+                ctx.fillStyle = p.color;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.tamano, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            });
+
+            // Dibujar Jugador
+            ctx.save();
+            let spriteActual = jugador.puedoDash ? imgJugadorDash : imgJugadorSinDash;
+
+            if (jugador.direccion === -1) {
+                ctx.translate(jugador.x + jugador.ancho, jugador.y);
+                ctx.scale(-1, 1);
+                ctx.drawImage(spriteActual, 0, 0, jugador.ancho, jugador.alto);
+            } else {
+                ctx.drawImage(spriteActual, jugador.x, jugador.y, jugador.ancho, jugador.alto);
+            }
+            ctx.restore();
+        }
+
+        function loop() {
+            actualizar();
+            dibujar();
+            requestAnimationFrame(loop);
+        }
+
+        generarNivel();
+        loop();
+    </script>
+</body>
+</html>
