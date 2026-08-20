@@ -204,49 +204,104 @@
             color: #000;
             box-shadow: 0 0 20px rgba(255,255,255,0.8), inset 0 0 15px rgba(255,255,255,0.3);
         }
-        body{
-            background-color: rgb(0, 217, 255);
-        }
         .hii{
             color:rgb(217, 255, 0)
         }
         .holajuanito{
             background-color:crimson
         }
+        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.1); } }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        @keyframes glow { 0% { box-shadow: 0 0 10px #ff0055; } 100% { box-shadow: 0 0 30px #ff0055, 0 0 50px #ff66a3; } }
+        @keyframes shine { 100% { left: 100%; } }
     </style>
 </head>
 <body>
+    <div style="height: 4px; background: linear-gradient(90deg, #ff0055, #ff66a3, #ffffff, #ff66a3, #ff0055);"></div>
+    <div style="text-align: center; padding: 10px; font-family: 'Metal Mania', cursive; color: #ff0055; font-size: 14px; letter-spacing: 3px;">◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆</div>
+    
     <header>
-        <div class="contenedor">
-            <h1 class="titulo">registro</h1>
+        <div class="contenedor" style="position: relative;">
+            <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 10px;">
+                <span style="font-size: 40px; animation: pulse 1.5s infinite;">📝</span>
+                <h1 class="titulo">registro</h1>
+                <span style="font-size: 40px; animation: pulse 1.5s infinite reverse;">📝</span>
+            </div>
+            <div style="height: 2px; background: linear-gradient(90deg, transparent, #ff0055, transparent); margin-top: 10px;"></div>
+            <div style="display: flex; justify-content: center; gap: 30px; margin-top: 10px; font-family: 'Metal Mania', cursive; color: #ffffff; font-size: 18px; letter-spacing: 2px;">
+                <span>★</span>
+                <span>NEW RECRUIT</span>
+                <span>★</span>
+            </div>
         </div>
     </header>
+    <div style="text-align: center; padding: 10px; font-family: 'Metal Mania', cursive; color: #ff0055; font-size: 14px; letter-spacing: 3px;">◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆</div>
+    <div style="height: 4px; background: linear-gradient(90deg, #ff0055, #ff66a3, #ffffff, #ff66a3, #ff0055);"></div>
     <br>
     <div class="conten-principal">
         <div class="conten-parrafo">
+            <div style="text-align: center; margin-bottom: 15px;">
+                <span style="font-size: 30px; display: inline-block; animation: bounce 1s infinite;">🎸</span>
+                <span style="font-size: 30px; display: inline-block; animation: bounce 1s infinite 0.2s;">🤘</span>
+                <span style="font-size: 30px; display: inline-block; animation: bounce 1s infinite 0.4s;">🎸</span>
+            </div>
             <h1 class="p-nombre">registro de usuario</h1>
+            <div style="height: 3px; background: linear-gradient(90deg, transparent, #ff0055, #ffffff, #ff0055, transparent); margin: 15px 0;"></div>
             
             <!-- Formulario de captura de datos -->
-            <form action="Registro.html" method="post">
+            <form action="Registro.html" method="post" style="position: relative;">
+                <div style="position: absolute; top: -10px; left: -10px; right: -10px; bottom: -10px; border: 2px solid #ff0055; border-radius: 8px; opacity: 0.3; pointer-events: none; animation: glow 2s infinite alternate;"></div>
                 
                 <!-- Campo para el Nombre de Usuario -->
-                <label for="nombre">Nombre de Usuario:</label>
-                <input type="text" id="nombre" name="nombre" required>
+                <div style="margin-bottom: 10px;">
+                    <label for="nombre" style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                        <span style="font-size: 20px;">👤</span>
+                        Nombre de Usuario:
+                    </label>
+                    <input type="text" id="nombre" name="nombre" required style="width: 100%;">
+                </div>
 
                 <!-- Campo oculto para la Contraseña -->
-                <label for="password">Contraseña:</label>
-                <input type="password" id="password" name="password" required>
+                <div style="margin-bottom: 10px;">
+                    <label for="password" style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                        <span style="font-size: 20px;">🔒</span>
+                        Contraseña:
+                    </label>
+                    <input type="password" id="password" name="password" required style="width: 100%;">
+                </div>
 
                 <!-- Botón para enviar el formulario -->
-                <button type="submit" class="boton_1">Registrarse</button>
-                
+                <button type="submit" class="boton_1" style="position: relative; overflow: hidden; width: 100%; margin-top: 10px;">
+                    <span style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                        <span style="font-size: 20px;">⚡</span>
+                        Registrarse
+                        <span style="font-size: 20px;">⚡</span>
+                    </span>
+                    <span style="position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); animation: shine 2s infinite;"></span>
+                </button>
             </form>
+            <div style="height: 3px; background: linear-gradient(90deg, transparent, #ff0055, #ffffff, #ff0055, transparent); margin: 15px 0;"></div>
             
             <div class="botones_1">
-                <a href="index.html" class="boton_1">Volver al inicio</a>
-                <a href="menu.html" class="boton_1">Menú principal</a>
+                <a href="index.html" class="boton_1" style="position: relative; overflow: hidden;">
+                    <span style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 18px;">🏠</span>
+                        Volver al inicio
+                    </span>
+                    <span style="position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); animation: shine 2s infinite;"></span>
+                </a>
+                <a href="menu.html" class="boton_1" style="position: relative; overflow: hidden;">
+                    <span style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 18px;">☰</span>
+                        Menú principal
+                    </span>
+                    <span style="position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); animation: shine 2s infinite 0.5s;"></span>
+                </a>
             </div>
+            <div style="text-align: center; margin-top: 20px; font-family: 'Metal Mania', cursive; color: #ff0055; font-size: 14px; letter-spacing: 2px;">░▒▓█ JOIN THE METAL LEGION █▓▒░</div>
         </div>
     </div>
+    <div style="text-align: center; padding: 20px; font-family: 'Metal Mania', cursive; color: #ff0055; font-size: 14px; letter-spacing: 3px;">◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆</div>
+    <div style="height: 4px; background: linear-gradient(90deg, #ff0055, #ff66a3, #ffffff, #ff66a3, #ff0055);"></div>
 </body>
 </html>
